@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그 게시판(new)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>블로그 게시판(new)</h1>
+    <div class="mt-5">
+        <h2>게시글 목록</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>제목</th>
+                    <th>작성자</th> <th>작성일</th> <th>조회수</th> <th>좋아요</th> <th>관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.id}"></td>
+                    <td>
+                        <a th:href="@{/article_edit/{id}(id=${article.id})}" th:text="${article.title}"></a>
+                    </td>
+                    <td th:text="${article.user}"></td>
+                    <td th:text="${article.newdate}"></td>
+                    <td th:text="${article.count}"></td>
+                    <td th:text="${article.likec}"></td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" 
+                        th:href="@{/api/article_delete/{id}(id=${article.id})}"
+                        onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="text-right">
+            <a class="btn btn-warning" th:href="@{/board_write}">글쓰기</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+            <!-- <tbody>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.id}">1</td>
+                    <td th:text="${article.title}">게시글 제목입니다.</td>
+                    <td th:text="${article.content}">게시글 내용이 여기에 들어갑니다.</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm"
+                           th:href="@{/article_edit/{id}(id=${article.id})}">수정</a>
+                        <a class="btn btn-danger btn-sm"
+                           th:href="@{/article_delete/{id}(id=${article.id})}">삭제</a>
+                    </td>
+                </tr>
+            </tbody> -->
+        </table>
+    </div>
+
+    <!-- <hr class="my-5">arning" th:href="@{/article_edit/{id}(id=${article.id})}">삭제</a> -->
+
+</div>
+<!-- <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" 
+            th:classappend="${currentPage == 0} ? 'disabled'">
+            <a class="page-link" 
+               th:href="@{/board_list(page=${currentPage - 1}, keyword=${keyword})}" 
+               aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        
+        <li class="page-item" 
+            th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+            th:classappend="${i == currentPage} ? 'active'">
+            <a class="page-link"
+               th:href="@{/board_list(page=${i}, keyword=${keyword})}" 
+               th:text="${i + 1}">1</a>
+        </li>
+        
+        <li class="page-item" 
+            th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+            <a class="page-link" 
+               th:href="@{/board_list(page=${currentPage + 1}, keyword=${keyword})}" 
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav> -->

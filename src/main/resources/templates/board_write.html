@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>블로그 게시판(new)</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+
+    <h1 class="mt-5">블로그 게시판(new)</h1>
+
+    <div class="mt-5">
+        <h2>게시글 목록</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-primary">
+            <th>ID</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+            <th>좋아요</th>
+                </tr>
+            </thead>
+            <tbody>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.id}"></td>
+            
+            <td>
+                <a th:href="@{/article_edit/{id}(id=${article.id})}" th:text="${article.title}"></a>
+            </td>
+            <td>
+                <a th:href="@{/board_view/{id}(id=${board.id})}">
+                    <span th:text="${board.title}"></span>
+                </a>
+            </td>
+        <td th:text="${article.user}"></td>
+            
+            <td th:text="${article.newdate}"></td>
+            
+            <td th:text="${article.count}"></td>
+            
+            <td th:text="${article.likec}"></td>
+        </tr>
+        <input type="hidden" id="user" name="user" value="GUEST">
+<input type="hidden" id="newdate" name="newdate" value="오늘날짜">
+<input type="hidden" id="count" name="count" value="0">
+<input type="hidden" id="likec" name="likec" value="0">
+</form>
+</div>
+<tbody>
+                <tr th:each="article : ${articles}">
+                    
+                    <td th:text="${article.id}"></td>
+                    
+                 <tr>
+<td><!-- 글쓰기 버튼 -->
+<a class="btn btn-warning" th:href="@{/board_write}">글쓰기</a>
+</td>
+</tr>
+
+                    <div class="mt-4">
+<h2>게시글 추가(제목과 내용 입력)</h2>
+
+    <form th:action="@{/api/articles}" method="post" name="content">
+        
+        <div class="form-group">
+            <label for="title">제목:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">내용:</label>
+            <textarea class="form-control" id="content" name="content" rows="5" placeholder="내용을 입력하세요" required></textarea>
+        </div>
+
+        <input type="hidden" name="user" value="GUEST"> 
+        <input type="hidden" name="newdate" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+        <input type="hidden" name="count" value="0">
+        <input type="hidden" name="likec" value="0">
+
+        <button type="submit" class="btn btn-primary">글 저장하기</button>
+        <a href="/board_list" class="btn btn-secondary">목록으로 돌아가기</a>
+    </form>
+
+</div>
+</body>
+</html>
+
+</div>
+</body>
+</html>
+            <!-- <tbody>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.id}">1</td>
+                    <td th:text="${article.title}">게시글 제목입니다.</td>
+                    <td th:text="${article.content}">게시글 내용이 여기에 들어갑니다.</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm"
+                           th:href="@{/article_edit/{id}(id=${article.id})}">수정</a>
+                        <a class="btn btn-danger btn-sm"
+                           th:href="@{/article_delete/{id}(id=${article.id})}">삭제</a>
+                    </td>
+                </tr>
+            </tbody> -->
+            

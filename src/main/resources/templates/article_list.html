@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>블로그 게시판</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+
+    <h1 class="mt-5">블로그 게시판</h1>
+
+    <div class="mt-5">
+        <h2>게시글 목록</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>액션</th> </tr>
+            </thead>
+            <tbody>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.id}">1</td>
+                    <td th:text="${article.title}">게시글 제목입니다.</td>
+                    <td th:text="${article.content}">게시글 내용이 여기에 들어갑니다.</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm"
+                           th:href="@{/article_edit/{id}(id=${article.id})}">수정</a>
+                        <a class="btn btn-danger btn-sm"
+                           th:href="@{/article_delete/{id}(id=${article.id})}">삭제</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="mt-4">
+        <h2>게시글 추가</h2>
+        <form th:action="@{/api/articles}" method="post">
+            <div class="form-group">
+                <label for="title">**제목:**</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">**내용:**</label>
+                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">추가</button>
+        </form>
+    </div>
+<!-- 수정/삭제 버튼 -->
+<a class="btn btn-warning" th:href="@{/article_edit/{id}(id=${article.id})}">수정</a>
+<a class="btn btn-warning" th:href="@{/article_edit/{id}(id=${article.id})}">삭제</a>
+
+</div>
+
+<!-- 삭제 버튼 -->
+<!-- <form th:action="@{/api/article_delete/{id}(id=${article.id})}" method="post" style="display:inline;">
+<input type="hidden" name="_method" value="delete">
+<button type="submit" class="btn btn-danger">삭제</button>
+</form> -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

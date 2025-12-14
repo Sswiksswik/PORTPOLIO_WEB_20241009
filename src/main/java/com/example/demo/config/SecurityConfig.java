@@ -1,0 +1,44 @@
+package com.example.demo.config;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+
+
+@Configuration // 스프링 설정 클래스 지정, 등록된 Bean 생성 시점
+@EnableWebSecurity // 스프링 보안 활성화
+public class SecurityConfig { // 스프링에서 보안 관리 클래스
+
+    @Bean // 명시적 의존성 주입 : Autowired와 다름
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .headers(headers -> {
+                headers.addHeaderWriter((request, response) -> {
+                    response.setHeader("X-XSS-Protection", "1; mode=block");
+                });
+            })
+            
+            //.csrf(withDefaults()) // CSRF 보호 활성화 (기본값)
+            .csrf(csrf -> csrf.disable() // CSRF 보호 비활성화
+                //.ignoringRequestMatchers("/api/**") // /api/** 경로는 CSRF 보호 제외
+            )
+            .sessionManagement(session -> session
+                .invalidSessionUrl("/session-expired") // 세션 만료시 이동 페이지
+                .maximumSessions(1) // 사용자 별 세션 최대 수
+                .maxSessionsPreventsLogin(true) // 동시 세션 제한 (true: 새로운 로그인 차단)
+            );
+
+        return http.build(); // 필터 체인을 통해 보안설정(HttpSecurity)을 반환
+    }
+
+    @Bean // 암호화 설정
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // 비밀번호 암호화 저장
+    }
+}

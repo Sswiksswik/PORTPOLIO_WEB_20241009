@@ -1,0 +1,53 @@
+package com.example.demo.model.domain;
+
+import lombok.*; // 어노테이션 자동 생성
+import jakarta.persistence.*; // 기존 javax 후속 버전
+
+@Getter 
+@Entity 
+@Table(name = "article") // 테이블 이름을 지정. 없는 경우 클래스이름으로 설정
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 외부 생성자 접근 방지
+@AllArgsConstructor 
+@Builder // 생성자에 빌더 패턴 적용(불변성)
+
+public class Article {
+    @Id // 기본 키
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 1씩 증가
+    @Column(name = "id", updatable = false) // 수정 x
+    private Long id;
+
+    @Column(name = "title", nullable = false) // null x
+    private String title ;
+
+    @Column(name = "content", nullable = false)
+    private String content ;
+
+    @Column(name = "user")
+    private String user;
+
+    @Column(name = "newdate")
+    private String newdate;
+
+    @Column(name = "count")
+    private String count;
+
+    @Column(name = "likec")
+    private String likec;
+
+  
+    // public Article(String title, String content) {
+    //     this.title = title;
+    //     this.content = content;
+    // }
+
+    public void update(String title, String content) { // 현재 객체 상태 업데이트
+        this.title = title;
+        this.content = content;
+    }
+
+
+    // public static Object builder() {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    // }
+}

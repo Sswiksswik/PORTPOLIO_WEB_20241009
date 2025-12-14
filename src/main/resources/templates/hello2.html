@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>두번째 헬로 페이지</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>안녕하세요!</h2>
+
+    <p>홍길동님<span th:text="${username}"></span></p>
+    <p>방갑습니다.<span th:text="${today}"></span></p>
+    <p>오늘<span th:text="${time}"></span></p>
+    <p>날씨는 <span th:text="${weather}"></span></p>
+    <p>매우 좋습니다</p>
+    <br>
+    <a href="/">홈페이지 메인</a> </body>
+</html>
